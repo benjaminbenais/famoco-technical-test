@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import { Root, Home, Data } from 'routes';
+import store from 'store';
 import ColorModeContext from './contexts/colorModeContext';
 
 const router = createBrowserRouter([
@@ -22,9 +24,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ColorModeContext>
-      <RouterProvider router={router} />
-    </ColorModeContext>
+    <Provider store={store}>
+      <ColorModeContext>
+        <RouterProvider router={router} />
+      </ColorModeContext>
+    </Provider>
   );
 }
 

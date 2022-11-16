@@ -36,6 +36,10 @@ module.exports = {
     'react/jsx-filename-extension': ['warn', { extensions: ['.tsx'] }],
     'import/prefer-default-export': 'off',
     'react/prop-types': 'off',
-    'react/require-default-props': 'off'
+    'react/require-default-props': 'off',
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['state'] }
+    ]
   }
 };
