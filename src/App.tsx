@@ -1,13 +1,22 @@
-import * as React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { Root } from 'routes';
+import { Root, Home, Data } from 'routes';
 import ColorModeContext from './contexts/colorModeContext';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />
+    element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      },
+      {
+        path: 'data',
+        element: <Data />
+      }
+    ]
   }
 ]);
 

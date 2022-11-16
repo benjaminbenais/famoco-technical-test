@@ -1,13 +1,9 @@
-import { ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Box, Container } from '@mui/material';
 
 import { Header } from 'components/organisms';
 
-interface AppContainerProps {
-  children?: ReactNode;
-}
-
-const Root = ({ children = null }: AppContainerProps) => {
+const Root = () => {
   return (
     <Box
       sx={{
@@ -18,7 +14,9 @@ const Root = ({ children = null }: AppContainerProps) => {
       }}
     >
       <Header />
-      <Container maxWidth="lg">{children}</Container>
+      <Container maxWidth="lg">
+        <Outlet />
+      </Container>
     </Box>
   );
 };

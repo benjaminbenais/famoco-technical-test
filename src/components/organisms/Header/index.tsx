@@ -8,7 +8,9 @@ const Header = () => {
       component="header"
       sx={{
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        px: 2,
+        py: 3
       }}
     >
       <p>Logo</p>
