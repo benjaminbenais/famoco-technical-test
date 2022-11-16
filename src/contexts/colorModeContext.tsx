@@ -18,7 +18,11 @@ export const useColorMode = () => {
 };
 
 const Theme = ({ children }: ThemeProps) => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  const [mode, setMode] = useState<'light' | 'dark'>(
+    prefersDark ? 'dark' : 'light'
+  );
 
   const colorMode = useMemo(
     () => ({
