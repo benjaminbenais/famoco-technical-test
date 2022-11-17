@@ -79,13 +79,15 @@ const MarketTable = ({ data }: MarketTableProps) => {
                 <Typography sx={{ fontWeight: 'bold' }}>{coin.name}</Typography>
                 {coin.symbol}
               </TableCell>
-              <TableCell align="right">${coin.price_usd}</TableCell>
+              <TableCell align="right">
+                ${Number(coin.price_usd).toLocaleString()}
+              </TableCell>
               <TableCell align="right">
                 <Typography
                   variant="body1"
                   sx={getPercentChangeStyle(coin.percent_change_1h)}
                 >
-                  {coin.percent_change_1h}
+                  {coin.percent_change_1h}%
                 </Typography>
               </TableCell>
               <TableCell align="right">
@@ -93,7 +95,7 @@ const MarketTable = ({ data }: MarketTableProps) => {
                   variant="body1"
                   sx={getPercentChangeStyle(coin.percent_change_24h)}
                 >
-                  {coin.percent_change_24h}
+                  {coin.percent_change_24h}%
                 </Typography>
               </TableCell>
               <TableCell align="right">
@@ -101,12 +103,14 @@ const MarketTable = ({ data }: MarketTableProps) => {
                   variant="body1"
                   sx={getPercentChangeStyle(coin.percent_change_7d)}
                 >
-                  {coin.percent_change_7d}
+                  {coin.percent_change_7d}%
                 </Typography>
               </TableCell>
-              <TableCell align="right">${coin.market_cap_usd}</TableCell>
               <TableCell align="right">
-                ${Number(coin.volume24).toFixed(2)}
+                ${Number(coin.market_cap_usd).toLocaleString()}
+              </TableCell>
+              <TableCell align="right">
+                ${Number(coin.volume24).toLocaleString()}
               </TableCell>
             </TableRow>
           ))}
