@@ -19,9 +19,11 @@ const getPercentChangeStyle = (value: string) => {
     return {
       color: '#16c784',
       '&:before': {
+        position: 'relative',
+        top: '-2px',
         content: '"\u25b2"',
-        transform: 'scale(0.7)',
-        verticalAlign: 'center'
+        fontSize: '10px',
+        marginRight: '2px'
       }
     };
   }
@@ -30,8 +32,11 @@ const getPercentChangeStyle = (value: string) => {
     return {
       color: 'red',
       '&:before': {
+        position: 'relative',
+        top: '-2px',
         content: '"\u25bc"',
-        transform: 'scale(0.7)'
+        fontSize: '10px',
+        marginRight: '2px'
       }
     };
   }

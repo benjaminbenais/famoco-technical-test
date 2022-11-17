@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
+import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getGlobalData } from 'slices/global';
@@ -10,6 +11,9 @@ import { getCoins } from 'slices/coins';
 const LIMIT = 15;
 
 const Data = () => {
+  // eslint-disable-next-line
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const dispatch = useAppDispatch();
   const {
     // loading: globalLoading,
@@ -21,7 +25,6 @@ const Data = () => {
   const { data: globalData } = global;
   const { data: allCoins } = coins;
 
-  // const [start, setStart] = useState(0);
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
@@ -30,10 +33,19 @@ const Data = () => {
 
   useEffect(() => {
     if (globalData?.coins_count) {
-      dispatch(getCoins({ start: 0, limit: LIMIT }));
-      setPageCount(Math.floor(globalData.coins_count / LIMIT));
+      const page = searchParams.get('page') || 1;
+
+      dispatch(getCoins({ start: (+page - 1) * LIMIT, limit: LIMIT }));
+
+      if (!pageCount) {
+        setPageCount(Math.floor(globalData.coins_count / LIMIT));
+      }
     }
-  }, [globalData?.coins_count]);
+  }, [globalData?.coins_count, searchParams]);
+
+  const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
+    setSearchParams({ page: String(page) });
+  };
 
   if (!allCoins) {
     return <p>Loading...</p>;
@@ -52,7 +64,12 @@ const Data = () => {
           justifyContent: 'center'
         }}
       >
-        <Pagination count={pageCount} color="primary" />
+        <Pagination
+          count={pageCount}
+          onChange={handlePageChange}
+          color="primary"
+          shape="rounded"
+        />
       </Box>
     </Box>
   );
