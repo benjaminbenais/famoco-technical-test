@@ -1,7 +1,7 @@
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { Box, Container } from '@mui/material';
 
-import { Header } from 'components/organisms';
+import { Header, Footer } from 'components/organisms';
 
 const Root = () => {
   return (
@@ -16,6 +16,7 @@ const Root = () => {
       <Container maxWidth="lg">
         <Header />
         <Outlet />
+        <Footer />
         <ScrollRestoration />
       </Container>
     </Box>
