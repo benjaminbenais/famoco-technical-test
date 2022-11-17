@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getGlobalData } from 'slices/global';
-import { MarketTable } from 'components/organisms';
+import { GlobalMarketData, MarketTable } from 'components/organisms';
 import { getCoins } from 'slices/coins';
 
 const LIMIT = 15;
@@ -47,12 +47,15 @@ const Data = () => {
     setSearchParams({ page: String(page) });
   };
 
-  if (!allCoins) {
+  if (!allCoins || !globalData) {
     return <p>Loading...</p>;
   }
 
   return (
     <Box sx={{ py: 4 }}>
+      <Box sx={{ mb: 8 }}>
+        <GlobalMarketData data={globalData} />
+      </Box>
       <Box>
         <MarketTable data={allCoins} />
       </Box>
