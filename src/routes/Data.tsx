@@ -11,27 +11,24 @@ import { getCoins } from 'slices/coins';
 const LIMIT = 15;
 
 const Data = () => {
-  // eslint-disable-next-line
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useAppDispatch();
-  const {
-    // loading: globalLoading,
-    global,
-    coins
-    // error: globalError
-  } = useAppSelector((state) => state);
+  const { global, coins } = useAppSelector((state) => state);
 
-  const { data: globalData } = global;
+  const { loading, data: globalData } = global;
   const { data: allCoins } = coins;
 
   const [pageCount, setPageCount] = useState(0);
 
+  // Get global market data
   useEffect(() => {
     dispatch(getGlobalData());
   }, []);
 
   useEffect(() => {
+    // Global market data gives us the total number of coins.
+    // We can use this value to handle the pagination.
     if (globalData?.coins_count) {
       const page = searchParams.get('page') || 1;
 
@@ -47,8 +44,12 @@ const Data = () => {
     setSearchParams({ page: String(page) });
   };
 
-  if (!allCoins || !globalData) {
+  if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (!allCoins || !globalData) {
+    return null;
   }
 
   return (
