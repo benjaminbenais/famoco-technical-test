@@ -42,7 +42,13 @@ const initialState = {
 const coinsSlice = createSlice({
   name: 'coins',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      state.loading = false;
+      state.data = null;
+      state.error = false;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getCoins.pending, (state) => {
       state.error = false;
@@ -59,4 +65,5 @@ const coinsSlice = createSlice({
   }
 });
 
+export const { resetState } = coinsSlice.actions;
 export default coinsSlice.reducer;

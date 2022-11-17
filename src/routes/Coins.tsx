@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getGlobalData } from 'slices/global';
 import { GlobalMarketData, MarketTable } from 'components/organisms';
-import { getCoins } from 'slices/coins';
+import { getCoins, resetState } from 'slices/coins';
 
 const LIMIT = 15;
 
@@ -39,6 +39,12 @@ const Data = () => {
       }
     }
   }, [globalData?.coins_count, searchParams]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetState());
+    };
+  }, []);
 
   const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
     setSearchParams({ page: String(page) });

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getCoin } from 'slices/coin';
-import { getMarkets } from 'slices/markets';
-import { CoinCard } from 'components/organisms';
+import { getCoin, resetState as resetCoinState } from 'slices/coin';
+import { getMarkets, resetState as resetMarketsState } from 'slices/markets';
+import { CoinCard, MarketsTable } from 'components/organisms';
 
 const CoinDetails = () => {
   const { id } = useParams();
@@ -22,11 +22,35 @@ const CoinDetails = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetCoinState());
+      dispatch(resetMarketsState());
+    };
+  }, []);
+
   if (loadingCoin || loadingMarkets) {
     return <p>Loading...</p>;
   }
 
-  return <Box>{coinData && <CoinCard data={coinData} />}</Box>;
+  return (
+    <Box sx={{ py: 4 }}>
+      <Box sx={{ mb: 10 }}>{coinData && <CoinCard data={coinData} />}</Box>
+      <Box>
+        {coinData && marketsData && (
+          <>
+            <Typography variant="h5" sx={{ fontWeight: 600, mb: 4 }}>
+              {coinData.name} Markets
+            </Typography>
+            <MarketsTable
+              data={marketsData}
+              volume24={Number(coinData?.volume24)}
+            />
+          </>
+        )}
+      </Box>
+    </Box>
+  );
 };
 
 export default CoinDetails;

@@ -39,7 +39,13 @@ const initialState = {
 const marketsSlice = createSlice({
   name: 'markets',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      state.loading = false;
+      state.data = null;
+      state.error = false;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getMarkets.pending, (state) => {
       state.loading = true;
@@ -56,4 +62,5 @@ const marketsSlice = createSlice({
   }
 });
 
+export const { resetState } = marketsSlice.actions;
 export default marketsSlice.reducer;
