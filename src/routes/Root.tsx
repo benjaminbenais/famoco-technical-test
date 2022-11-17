@@ -8,14 +8,15 @@ const Root = () => {
     <Box
       sx={{
         width: '100%',
-        minHeight: '100vh',
         bgcolor: 'background.default',
         color: 'text.primary'
       }}
     >
       <Container maxWidth="lg">
-        <Header />
-        <Outlet />
+        <Box sx={{ minHeight: '100vh' }}>
+          <Header />
+          <Outlet />
+        </Box>
         <Footer />
         <ScrollRestoration />
       </Container>
