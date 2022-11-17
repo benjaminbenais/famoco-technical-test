@@ -36,16 +36,26 @@ const MarketsTable = ({ data, volume24 }: MarketsTableProps) => {
               <TableCell component="th" scope="row">
                 {i + 1}
               </TableCell>
-              <TableCell>{market.name}</TableCell>
-              <TableCell>{`${market.base}/${market.quote}`}</TableCell>
-              <TableCell align="right">
-                ${market.price_usd.toLocaleString()}
+              <TableCell>{market.name || '-'}</TableCell>
+              <TableCell>
+                {market.base && market.quote
+                  ? `${market.base}/${market.quote}`
+                  : '-'}
               </TableCell>
               <TableCell align="right">
-                ${market.volume_usd.toLocaleString()}
+                {market.price_usd
+                  ? `$${market.price_usd.toLocaleString()}`
+                  : '-'}
               </TableCell>
               <TableCell align="right">
-                ${((market.volume_usd * 100) / volume24).toFixed(2)}
+                {market.volume_usd
+                  ? `$${market.volume_usd.toLocaleString()}`
+                  : '-'}
+              </TableCell>
+              <TableCell align="right">
+                {market.volume_usd && volume24
+                  ? `${((market.volume_usd * 100) / volume24).toFixed(2)}%`
+                  : '-'}
               </TableCell>
             </TableRow>
           ))}

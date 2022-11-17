@@ -11,7 +11,16 @@ const Item = ({ label, value }: { label: string; value: string }) => {
   return (
     <Box
       component="li"
-      sx={{ display: 'flex', alignItems: 'center', fontSize: '13px' }}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: '13px',
+        whiteSpace: 'nowrap',
+        pr: 2,
+        '&:last-child': {
+          pr: 0
+        }
+      }}
     >
       <Typography component="span" sx={{ fontSize: 'inherit', mr: 0.5 }}>
         {label}:
@@ -31,9 +40,15 @@ const GlobalMarketData = ({ data }: GlobalMarketProps) => {
     <Box
       component="ul"
       sx={{
+        overflowX: 'scroll',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        msOverflowStyle: 'none',
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': {
+          display: 'none'
+        }
       }}
     >
       <Item label="Cryptos" value={data.coins_count.toLocaleString()} />

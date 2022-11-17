@@ -1,6 +1,5 @@
 import { useEffect, useState, ChangeEvent } from 'react';
-import Box from '@mui/material/Box';
-import Pagination from '@mui/material/Pagination';
+import { Box, Pagination } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
