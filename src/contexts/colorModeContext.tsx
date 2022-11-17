@@ -1,4 +1,11 @@
-import { createContext, useState, useMemo, ReactNode, useContext } from 'react';
+import {
+  createContext,
+  useEffect,
+  useState,
+  useMemo,
+  ReactNode,
+  useContext
+} from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 interface ColorModeContextType {
@@ -17,12 +24,24 @@ export const useColorMode = () => {
   return useContext(ColorModeContext);
 };
 
-const Theme = ({ children }: ThemeProps) => {
+const initColotMode = () => {
+  const savedMode = localStorage.getItem('theme-mode');
+
+  if (savedMode === 'light' || savedMode === 'dark') {
+    return savedMode;
+  }
+
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  const [mode, setMode] = useState<'light' | 'dark'>(
-    prefersDark ? 'dark' : 'light'
-  );
+  return prefersDark ? 'dark' : 'light';
+};
+
+const Theme = ({ children }: ThemeProps) => {
+  const [mode, setMode] = useState<'light' | 'dark'>(initColotMode());
+
+  useEffect(() => {
+    localStorage.setItem('theme-mode', mode);
+  }, [mode]);
 
   const colorMode = useMemo(
     () => ({
