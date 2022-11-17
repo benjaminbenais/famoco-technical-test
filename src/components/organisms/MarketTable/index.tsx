@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -59,6 +60,8 @@ const PercentChange = ({ value }: { value: string }) => {
 };
 
 const MarketTable = ({ data }: MarketTableProps) => {
+  const navigate = useNavigate();
+
   return (
     <TableContainer>
       <Table
@@ -83,8 +86,14 @@ const MarketTable = ({ data }: MarketTableProps) => {
         <TableBody>
           {data?.map((coin) => (
             <TableRow
+              hover
+              tabIndex={-1}
               key={coin.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              onClick={() => navigate(`/data/${coin.id}`)}
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+                cursor: 'pointer'
+              }}
             >
               <TableCell component="th" scope="row">
                 {coin.rank}

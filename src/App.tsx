@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { Root, Home, Data } from 'routes';
+import { Root, Home, Data, CoinDetails } from 'routes';
 import store from 'store';
 import ColorModeContext from './contexts/colorModeContext';
 
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: 'data',
         element: <Data />
+      },
+      {
+        path: 'data/:id',
+        element: <CoinDetails />
       }
     ]
   }
