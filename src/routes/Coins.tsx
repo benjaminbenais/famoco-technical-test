@@ -1,4 +1,4 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { Box, Pagination } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
@@ -9,8 +9,13 @@ import { getCoins, resetState } from 'slices/coins';
 
 const LIMIT = 15;
 
+const getCurrentPage = (page: string | null) => {
+  return page ? +page : 1;
+};
+
 const Data = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const defaultPage = useRef(getCurrentPage(searchParams.get('page')));
 
   const dispatch = useAppDispatch();
   const { global, coins } = useAppSelector((state) => state);
@@ -29,9 +34,8 @@ const Data = () => {
     // Global market data gives us the total number of coins.
     // We can use this value to handle the pagination.
     if (globalData?.coins_count) {
-      const page = searchParams.get('page') || 1;
-
-      dispatch(getCoins({ start: (+page - 1) * LIMIT, limit: LIMIT }));
+      const page = getCurrentPage(searchParams.get('page'));
+      dispatch(getCoins({ start: (page - 1) * LIMIT, limit: LIMIT }));
 
       if (!pageCount) {
         setPageCount(Math.floor(globalData.coins_count / LIMIT));
@@ -76,6 +80,7 @@ const Data = () => {
         <Pagination
           count={pageCount}
           onChange={handlePageChange}
+          defaultPage={defaultPage.current}
           color="primary"
           shape="rounded"
         />

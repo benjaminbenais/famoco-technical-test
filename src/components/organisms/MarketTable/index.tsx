@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -61,6 +61,7 @@ const PercentChange = ({ value }: { value: string }) => {
 
 const MarketTable = ({ data }: MarketTableProps) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   return (
     <TableContainer>
@@ -89,7 +90,13 @@ const MarketTable = ({ data }: MarketTableProps) => {
               hover
               tabIndex={-1}
               key={coin.id}
-              onClick={() => navigate(`/coins/${coin.id}`)}
+              onClick={() =>
+                navigate(`/coins/${coin.id}`, {
+                  state: {
+                    page: searchParams.get('page')
+                  }
+                })
+              }
               sx={{
                 '&:last-child td, &:last-child th': { border: 0 },
                 cursor: 'pointer'

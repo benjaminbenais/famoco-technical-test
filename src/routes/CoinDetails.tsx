@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import StoreIcon from '@mui/icons-material/Store';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getCoin, resetState as resetCoinState } from 'slices/coin';
@@ -10,6 +11,7 @@ import { CoinData, MarketsTable } from 'components/organisms';
 
 const CoinDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { coin, markets } = useAppSelector((state) => state);
   const { loading: loadingCoin, data: coinData } = coin;
@@ -35,6 +37,27 @@ const CoinDetails = () => {
 
   return (
     <Box sx={{ py: 4 }}>
+      <Link
+        to={
+          location.state?.page ? `/coins?page=${location.state.page}` : '/coins'
+        }
+      >
+        <Typography
+          color="text.primary"
+          sx={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            mb: 4,
+            ml: '-12px',
+            '&:hover': {
+              textDecoration: 'underline'
+            }
+          }}
+        >
+          <KeyboardArrowLeftIcon />
+          Back
+        </Typography>
+      </Link>
       <Box sx={{ mb: 10 }}>{coinData && <CoinData data={coinData} />}</Box>
       <Box>
         {coinData && marketsData && (
