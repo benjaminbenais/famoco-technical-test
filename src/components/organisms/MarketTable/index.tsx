@@ -89,7 +89,7 @@ const MarketTable = ({ data }: MarketTableProps) => {
               hover
               tabIndex={-1}
               key={coin.id}
-              onClick={() => navigate(`/data/${coin.id}`)}
+              onClick={() => navigate(`/coins/${coin.id}`)}
               sx={{
                 '&:last-child td, &:last-child th': { border: 0 },
                 cursor: 'pointer'
