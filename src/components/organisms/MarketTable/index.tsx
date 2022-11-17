@@ -18,30 +18,44 @@ const getPercentChangeStyle = (value: string) => {
   if (n > 0) {
     return {
       color: '#16c784',
-      '&:before': {
-        position: 'relative',
-        top: '-2px',
-        content: '"\u25b2"',
-        fontSize: '10px',
-        marginRight: '2px'
-      }
+      symbol: '"\u25b2"'
     };
   }
 
   if (n < 0) {
     return {
-      color: 'red',
-      '&:before': {
-        position: 'relative',
-        top: '-2px',
-        content: '"\u25bc"',
-        fontSize: '10px',
-        marginRight: '2px'
-      }
+      color: '#ea3943',
+      symbol: '"\u25bc"'
     };
   }
 
   return null;
+};
+
+const PercentChange = ({ value }: { value: string }) => {
+  const style = getPercentChangeStyle(value);
+
+  return (
+    <Typography
+      variant="body1"
+      sx={{
+        color: style?.color,
+        ...(style?.symbol
+          ? {
+              '&:before': {
+                position: 'relative',
+                top: '-2px',
+                content: style.symbol,
+                fontSize: '10px',
+                marginRight: '2px'
+              }
+            }
+          : {})
+      }}
+    >
+      {value}%
+    </Typography>
+  );
 };
 
 const MarketTable = ({ data }: MarketTableProps) => {
@@ -83,28 +97,13 @@ const MarketTable = ({ data }: MarketTableProps) => {
                 ${Number(coin.price_usd).toLocaleString()}
               </TableCell>
               <TableCell align="right">
-                <Typography
-                  variant="body1"
-                  sx={getPercentChangeStyle(coin.percent_change_1h)}
-                >
-                  {coin.percent_change_1h}%
-                </Typography>
+                <PercentChange value={coin.percent_change_1h} />
               </TableCell>
               <TableCell align="right">
-                <Typography
-                  variant="body1"
-                  sx={getPercentChangeStyle(coin.percent_change_24h)}
-                >
-                  {coin.percent_change_24h}%
-                </Typography>
+                <PercentChange value={coin.percent_change_24h} />
               </TableCell>
               <TableCell align="right">
-                <Typography
-                  variant="body1"
-                  sx={getPercentChangeStyle(coin.percent_change_7d)}
-                >
-                  {coin.percent_change_7d}%
-                </Typography>
+                <PercentChange value={coin.percent_change_7d} />
               </TableCell>
               <TableCell align="right">
                 ${Number(coin.market_cap_usd).toLocaleString()}
