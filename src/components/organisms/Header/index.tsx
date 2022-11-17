@@ -1,4 +1,5 @@
-import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
 
 import { ThemeSwitcher } from 'components/molecules';
 
@@ -9,11 +10,20 @@ const Header = () => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        px: 2,
         py: 3
       }}
     >
-      <p>Logo</p>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <Typography
+          sx={{
+            fontSize: '18px',
+            fontWeight: 600,
+            color: 'text.primary'
+          }}
+        >
+          Crypto Market
+        </Typography>
+      </Link>
       <ThemeSwitcher />
     </Box>
   );

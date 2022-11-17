@@ -38,6 +38,7 @@ const CoinDetails = () => {
   return (
     <Box sx={{ py: 4 }}>
       <Link
+        style={{ textDecoration: 'none' }}
         to={
           location.state?.page ? `/coins?page=${location.state.page}` : '/coins'
         }

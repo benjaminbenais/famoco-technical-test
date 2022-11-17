@@ -13,8 +13,8 @@ const Root = () => {
         color: 'text.primary'
       }}
     >
-      <Header />
       <Container maxWidth="lg">
+        <Header />
         <Outlet />
         <ScrollRestoration />
       </Container>
