@@ -8,7 +8,7 @@ interface CoinDataProps {
   data: Coin;
 }
 
-const CoinData = ({ data }: CoinDataProps) => {
+const CurrencyData = ({ data }: CoinDataProps) => {
   return (
     <Box
       sx={{
@@ -34,4 +34,4 @@ const CoinData = ({ data }: CoinDataProps) => {
   );
 };
 
-export default CoinData;
+export default CurrencyData;

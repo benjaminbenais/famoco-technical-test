@@ -3,12 +3,12 @@ import axios from 'axios';
 
 import { Coin } from 'types/Coins';
 
-interface GetCoinPayload {
+interface GetCurrencyPayload {
   id: string;
 }
 
-export const getCoin = createAsyncThunk<Coin | null, GetCoinPayload>(
-  'assets/get-coin',
+export const getCurrency = createAsyncThunk<Coin | null, GetCurrencyPayload>(
+  'assets/get-currency',
   async (payload) => {
     try {
       const response = await axios.get(
@@ -24,7 +24,7 @@ export const getCoin = createAsyncThunk<Coin | null, GetCoinPayload>(
   }
 );
 
-interface CoinState {
+interface CurrencyState {
   loading: boolean;
   data: Coin | null;
   error: boolean;
@@ -34,10 +34,10 @@ const initialState = {
   loading: false,
   data: null,
   error: false
-} as CoinState;
+} as CurrencyState;
 
-const coinSlice = createSlice({
-  name: 'coin',
+const currencySlice = createSlice({
+  name: 'currency',
   initialState,
   reducers: {
     resetState: (state) => {
@@ -47,20 +47,20 @@ const coinSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getCoin.pending, (state) => {
+    builder.addCase(getCurrency.pending, (state) => {
       state.loading = true;
       state.error = false;
     });
-    builder.addCase(getCoin.fulfilled, (state, action) => {
+    builder.addCase(getCurrency.fulfilled, (state, action) => {
       state.data = action.payload;
       state.loading = false;
     });
-    builder.addCase(getCoin.rejected, (state) => {
+    builder.addCase(getCurrency.rejected, (state) => {
       state.error = true;
       state.loading = false;
     });
   }
 });
 
-export const { resetState } = coinSlice.actions;
-export default coinSlice.reducer;
+export const { resetState } = currencySlice.actions;
+export default currencySlice.reducer;

@@ -5,33 +5,33 @@ import StoreIcon from '@mui/icons-material/Store';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getCoin, resetState as resetCoinState } from 'slices/coin';
+import { getCurrency, resetState as resetCurrencyState } from 'slices/currency';
 import { getMarkets, resetState as resetMarketsState } from 'slices/markets';
-import { CoinData, MarketsTable } from 'components/organisms';
+import { CurrencyData, MarketsTable } from 'components/organisms';
 
-const CoinDetails = () => {
+const Currency = () => {
   const { id } = useParams();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { coin, markets } = useAppSelector((state) => state);
-  const { loading: loadingCoin, data: coinData } = coin;
+  const { currency, markets } = useAppSelector((state) => state);
+  const { loading: loadingCurrency, data: currencyData } = currency;
   const { loading: loadingMarkets, data: marketsData } = markets;
 
   useEffect(() => {
     if (id) {
-      dispatch(getCoin({ id }));
+      dispatch(getCurrency({ id }));
       dispatch(getMarkets({ id }));
     }
   }, [id]);
 
   useEffect(() => {
     return () => {
-      dispatch(resetCoinState());
+      dispatch(resetCurrencyState());
       dispatch(resetMarketsState());
     };
   }, []);
 
-  if (loadingCoin || loadingMarkets) {
+  if (loadingCurrency || loadingMarkets) {
     return <p>Loading...</p>;
   }
 
@@ -40,7 +40,9 @@ const CoinDetails = () => {
       <Link
         style={{ textDecoration: 'none' }}
         to={
-          location.state?.page ? `/coins?page=${location.state.page}` : '/coins'
+          location.state?.page
+            ? `/currencies?page=${location.state.page}`
+            : '/currencies'
         }
       >
         <Typography
@@ -59,9 +61,11 @@ const CoinDetails = () => {
           Back
         </Typography>
       </Link>
-      <Box sx={{ mb: 10 }}>{coinData && <CoinData data={coinData} />}</Box>
+      <Box sx={{ mb: 10 }}>
+        {currencyData && <CurrencyData data={currencyData} />}
+      </Box>
       <Box>
-        {coinData && marketsData && (
+        {currencyData && marketsData && (
           <>
             <Typography
               variant="h5"
@@ -72,12 +76,12 @@ const CoinDetails = () => {
                 mb: 4
               }}
             >
-              {coinData.name} Markets
+              {currencyData.name} Markets
               <StoreIcon sx={{ pl: 1 }} />
             </Typography>
             <MarketsTable
               data={marketsData}
-              volume24={Number(coinData?.volume24)}
+              volume24={Number(currencyData?.volume24)}
             />
           </>
         )}
@@ -86,4 +90,4 @@ const CoinDetails = () => {
   );
 };
 
-export default CoinDetails;
+export default Currency;

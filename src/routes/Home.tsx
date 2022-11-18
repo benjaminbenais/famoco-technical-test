@@ -21,7 +21,7 @@ const Home = () => {
             }
           }}
         >
-          <Link to="/coins">Go the the data</Link>
+          <Link to="/currencies">Go the the data</Link>
         </Button>
       </Box>
     </Box>

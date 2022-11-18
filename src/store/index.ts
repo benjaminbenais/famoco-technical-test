@@ -1,14 +1,14 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import global from 'slices/global';
-import coins from 'slices/coins';
-import coin from 'slices/coin';
+import currencies from 'slices/currencies';
+import currency from 'slices/currency';
 import markets from 'slices/markets';
 
 export const rootReducer = combineReducers({
   global,
-  coins,
-  coin,
+  currencies,
+  currency,
   markets
 });
 

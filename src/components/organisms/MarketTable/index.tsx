@@ -85,13 +85,13 @@ const MarketTable = ({ data }: MarketTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((coin) => (
+          {data?.map((currency) => (
             <TableRow
               hover
               tabIndex={-1}
-              key={coin.id}
+              key={currency.id}
               onClick={() =>
-                navigate(`/coins/${coin.id}`, {
+                navigate(`/currency/${currency.id}`, {
                   state: {
                     page: searchParams.get('page')
                   }
@@ -103,29 +103,31 @@ const MarketTable = ({ data }: MarketTableProps) => {
               }}
             >
               <TableCell component="th" scope="row">
-                {coin.rank}
+                {currency.rank}
               </TableCell>
               <TableCell>
-                <Typography sx={{ fontWeight: 'bold' }}>{coin.name}</Typography>
-                {coin.symbol}
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  {currency.name}
+                </Typography>
+                {currency.symbol}
               </TableCell>
               <TableCell align="right">
-                ${Number(coin.price_usd).toLocaleString()}
+                ${Number(currency.price_usd).toLocaleString()}
               </TableCell>
               <TableCell align="right">
-                <PercentChange value={coin.percent_change_1h} />
+                <PercentChange value={currency.percent_change_1h} />
               </TableCell>
               <TableCell align="right">
-                <PercentChange value={coin.percent_change_24h} />
+                <PercentChange value={currency.percent_change_24h} />
               </TableCell>
               <TableCell align="right">
-                <PercentChange value={coin.percent_change_7d} />
+                <PercentChange value={currency.percent_change_7d} />
               </TableCell>
               <TableCell align="right">
-                ${Number(coin.market_cap_usd).toLocaleString()}
+                ${Number(currency.market_cap_usd).toLocaleString()}
               </TableCell>
               <TableCell align="right">
-                ${Number(coin.volume24).toLocaleString()}
+                ${Number(currency.volume24).toLocaleString()}
               </TableCell>
             </TableRow>
           ))}

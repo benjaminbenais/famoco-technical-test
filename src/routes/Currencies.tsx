@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getGlobalData } from 'slices/global';
 import { GlobalMarketData, MarketTable } from 'components/organisms';
-import { getCoins, resetState } from 'slices/coins';
+import { getCurrencies, resetState } from 'slices/currencies';
 
 const LIMIT = 15;
 
@@ -18,10 +18,10 @@ const Data = () => {
   const defaultPage = useRef(getCurrentPage(searchParams.get('page')));
 
   const dispatch = useAppDispatch();
-  const { global, coins } = useAppSelector((state) => state);
+  const { global, currencies } = useAppSelector((state) => state);
 
   const { loading, data: globalData } = global;
-  const { data: allCoins } = coins;
+  const { data: currenciesData } = currencies;
 
   const [pageCount, setPageCount] = useState(0);
 
@@ -31,11 +31,11 @@ const Data = () => {
   }, []);
 
   useEffect(() => {
-    // Global market data gives us the total number of coins.
+    // Global market data gives us the total number of currencies.
     // We can use this value to handle the pagination.
     if (globalData?.coins_count) {
       const page = getCurrentPage(searchParams.get('page'));
-      dispatch(getCoins({ start: (page - 1) * LIMIT, limit: LIMIT }));
+      dispatch(getCurrencies({ start: (page - 1) * LIMIT, limit: LIMIT }));
 
       if (!pageCount) {
         setPageCount(Math.floor(globalData.coins_count / LIMIT));
@@ -57,7 +57,7 @@ const Data = () => {
     return <p>Loading...</p>;
   }
 
-  if (!allCoins || !globalData) {
+  if (!currenciesData || !globalData) {
     return null;
   }
 
@@ -67,7 +67,7 @@ const Data = () => {
         <GlobalMarketData data={globalData} />
       </Box>
       <Box>
-        <MarketTable data={allCoins} />
+        <MarketTable data={currenciesData} />
       </Box>
       <Box
         sx={{
