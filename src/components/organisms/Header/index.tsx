@@ -13,6 +13,7 @@ const Header = () => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         py: 3
       }}
     >

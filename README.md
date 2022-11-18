@@ -34,7 +34,7 @@ Each row of the table is clickable to get more information about a specific coin
 
 ### Currency page
 
-This page display more information about a specific coin and a table containing all the exchanges where the coin can be bought.
+This page displays more information about a specific coin and a table containing all the exchanges where the coin can be bought.
 
 ## Project setup
 
