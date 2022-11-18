@@ -44,9 +44,9 @@ Husky is a Git hook that will execute some scripts when changes are committed.
 In this case, two scripts are excecuted:
 `eslint` and `prettier --write`.
 
-The `eslint` script checks if there are any linting errors in the commited files.
+The `eslint` script checks if there are any linting errors in the committed files.
 
-The `prettier --write` script runs Prettier across all the commited files to format them according to the `.prettierrc` file.
+The `prettier --write` script runs Prettier across all the committed files to format them according to the `.prettierrc` file.
 
 If any of the scripts fails, with linting errors for example, the commit is rejected.
 
