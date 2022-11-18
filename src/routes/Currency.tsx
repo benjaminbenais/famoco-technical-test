@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -32,16 +32,23 @@ const Currency = () => {
     };
   }, []);
 
+  const currenciesLink = useMemo(() => {
+    const params = Object.keys(location.state).map((key, i) => {
+      if (location.state[key]) {
+        return i === 0
+          ? `?${key}=${location.state[key]}`
+          : `&${key}=${location.state[key]}`;
+      }
+
+      return '';
+    });
+
+    return `/currencies${params.join('')}`;
+  }, [location]);
+
   return (
     <Box>
-      <Link
-        style={{ textDecoration: 'none' }}
-        to={
-          location.state?.page
-            ? `/currencies?page=${location.state.page}`
-            : '/currencies'
-        }
-      >
+      <Link style={{ textDecoration: 'none' }} to={currenciesLink}>
         <Typography
           color="text.primary"
           sx={{

@@ -93,7 +93,8 @@ const CurrenciesTable = ({ data }: CurrenciesTableProps) => {
               onClick={() =>
                 navigate(`/currency/${currency.id}`, {
                   state: {
-                    page: searchParams.get('page')
+                    page: searchParams.get('page'),
+                    rowsPerPage: searchParams.get('rowsPerPage')
                   }
                 })
               }
