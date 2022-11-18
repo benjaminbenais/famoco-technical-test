@@ -1,7 +1,6 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import Root from './Root';
-import Home from './Home';
 import Currency from './Currency';
 import Currencies from './Currencies';
 
@@ -12,7 +11,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: <Navigate to="/currencies" replace />
       },
       {
         path: '/currencies',
