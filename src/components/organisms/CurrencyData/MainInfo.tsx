@@ -26,7 +26,11 @@ const Item = ({ label, value }: { label: string; value: string }) => {
 
 const MainInfo = ({ data }: MainInfoProps) => {
   const supplyPercentage = useMemo(() => {
-    return ((Number(data.tsupply) * 100) / Number(data.msupply)).toFixed();
+    if (data.tsupply && data.msupply) {
+      return ((Number(data.tsupply) * 100) / Number(data.msupply)).toFixed();
+    }
+
+    return null;
   }, [data]);
 
   return (
@@ -111,15 +115,19 @@ const MainInfo = ({ data }: MainInfoProps) => {
             >{`${Number(data.tsupply).toLocaleString()} ${
               data.symbol
             }`}</Typography>
-            <Typography sx={{ color: 'text.secondary', fontSize: '14px' }}>
-              {supplyPercentage}%
-            </Typography>
+            {supplyPercentage && (
+              <Typography sx={{ color: 'text.secondary', fontSize: '14px' }}>
+                {supplyPercentage}%
+              </Typography>
+            )}
           </Box>
-          <LinearProgress
-            variant="determinate"
-            color="inherit"
-            value={+supplyPercentage}
-          />
+          {supplyPercentage && (
+            <LinearProgress
+              variant="determinate"
+              color="inherit"
+              value={+supplyPercentage}
+            />
+          )}
         </Box>
       </Box>
     </Box>
