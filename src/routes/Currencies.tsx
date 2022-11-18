@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef, ChangeEvent } from 'react';
-import { Box, Pagination, Typography } from '@mui/material';
+import { useEffect, useState, ChangeEvent, MouseEvent, useMemo } from 'react';
+import Box from '@mui/material/Box';
+import TablePagination from '@mui/material/TablePagination';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -7,15 +8,18 @@ import { getGlobalData } from 'slices/global';
 import { GlobalMarketData, CurrenciesTable } from 'components/organisms';
 import { getCurrencies, resetState } from 'slices/currencies';
 
-const LIMIT = 15;
+const LIMIT = 25;
 
 const getCurrentPage = (page: string | null) => {
   return page ? +page : 1;
 };
 
+const getCurrentRowsPerPage = (rows: string | null) => {
+  return rows ? +rows : LIMIT;
+};
+
 const Data = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const defaultPage = useRef(getCurrentPage(searchParams.get('page')));
 
   const dispatch = useAppDispatch();
   const { global, currencies } = useAppSelector((state) => state);
@@ -24,32 +28,32 @@ const Data = () => {
   const { data: currenciesData } = currencies;
 
   const [pageCount, setPageCount] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [currentResults, setCurrentResults] = useState({
-    start: 1,
-    end: LIMIT
-  });
 
   // Get global market data
   useEffect(() => {
     dispatch(getGlobalData());
   }, []);
 
+  const page = useMemo(() => {
+    return getCurrentPage(searchParams.get('page'));
+  }, [searchParams]);
+
+  const rowsPerPage = useMemo(() => {
+    return getCurrentRowsPerPage(searchParams.get('rowsPerPage'));
+  }, [searchParams]);
+
   useEffect(() => {
     // Global market data gives us the total number of currencies.
     // We can use this value to handle the pagination.
     if (globalData?.coins_count) {
-      const page = getCurrentPage(searchParams.get('page'));
-      const start = (page - 1) * LIMIT;
-      dispatch(getCurrencies({ start, limit: LIMIT }));
-
-      setCurrentResults({ start: start + 1, end: start + LIMIT });
+      const start = (page - 1) * rowsPerPage;
+      dispatch(getCurrencies({ start, limit: rowsPerPage }));
 
       if (!pageCount) {
-        setPageCount(Math.floor(globalData.coins_count / LIMIT));
+        setPageCount(Math.floor(globalData.coins_count / rowsPerPage));
       }
     }
-  }, [globalData?.coins_count, searchParams]);
+  }, [globalData?.coins_count, rowsPerPage, page]);
 
   useEffect(() => {
     return () => {
@@ -57,8 +61,23 @@ const Data = () => {
     };
   }, []);
 
-  const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
-    setSearchParams({ page: String(page) });
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setSearchParams({
+      page: String(newPage + 1),
+      rowsPerPage: rowsPerPage.toString()
+    });
+  };
+
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearchParams({
+      page: '1',
+      rowsPerPage: parseInt(event.target.value, 10).toString()
+    });
   };
 
   return (
@@ -69,26 +88,14 @@ const Data = () => {
       {currenciesData && (
         <>
           <CurrenciesTable data={currenciesData} />
-          <Box
-            sx={{
-              py: 4,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'space-between'
-            }}
-          >
-            <Typography
-              sx={{ fontSize: '14px' }}
-            >{`Showing ${currentResults.start} - ${currentResults.end} out of ${globalData?.coins_count}`}</Typography>
-            <Pagination
-              count={pageCount}
-              onChange={handlePageChange}
-              defaultPage={defaultPage.current}
-              color="primary"
-              shape="rounded"
-            />
-            <p />
-          </Box>
+          <TablePagination
+            component="div"
+            count={Number(globalData?.coins_count)}
+            page={page - 1}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </>
       )}
     </Box>

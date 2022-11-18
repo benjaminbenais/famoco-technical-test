@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
-import { Box, Typography, Link as MuiLink } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { ThemeSwitcher } from 'components/molecules';
@@ -14,7 +16,7 @@ const Header = () => {
         py: 3
       }}
     >
-      <Link to="/" style={{ textDecoration: 'none' }}>
+      <RouterLink to="/" style={{ textDecoration: 'none' }}>
         <Typography
           sx={{
             fontSize: '18px',
@@ -24,16 +26,16 @@ const Header = () => {
         >
           Crypto Market
         </Typography>
-      </Link>
+      </RouterLink>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <MuiLink
+        <Link
           href="https://github.com/benjaminbenais/famoco-technical-test"
           target="_blank"
           rel="noreferrer"
           color="text.primary"
         >
           <GitHubIcon />
-        </MuiLink>
+        </Link>
         <ThemeSwitcher />
       </Box>
     </Box>

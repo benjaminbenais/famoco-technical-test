@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import StoreIcon from '@mui/icons-material/Store';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 

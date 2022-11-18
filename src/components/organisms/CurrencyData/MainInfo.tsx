@@ -1,5 +1,9 @@
 import { useMemo } from 'react';
-import { Box, Typography, Chip, Divider, LinearProgress } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import { Coin } from 'types/Coins';
 
