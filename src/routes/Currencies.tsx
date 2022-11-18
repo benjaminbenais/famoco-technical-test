@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, ChangeEvent } from 'react';
-import { Box, Pagination } from '@mui/material';
+import { Box, Pagination, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -24,6 +24,11 @@ const Data = () => {
   const { data: currenciesData } = currencies;
 
   const [pageCount, setPageCount] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [currentResults, setCurrentResults] = useState({
+    start: 1,
+    end: LIMIT
+  });
 
   // Get global market data
   useEffect(() => {
@@ -35,7 +40,10 @@ const Data = () => {
     // We can use this value to handle the pagination.
     if (globalData?.coins_count) {
       const page = getCurrentPage(searchParams.get('page'));
-      dispatch(getCurrencies({ start: (page - 1) * LIMIT, limit: LIMIT }));
+      const start = (page - 1) * LIMIT;
+      dispatch(getCurrencies({ start, limit: LIMIT }));
+
+      setCurrentResults({ start: start + 1, end: start + LIMIT });
 
       if (!pageCount) {
         setPageCount(Math.floor(globalData.coins_count / LIMIT));
@@ -66,9 +74,12 @@ const Data = () => {
               py: 4,
               width: '100%',
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'space-between'
             }}
           >
+            <Typography
+              sx={{ fontSize: '14px' }}
+            >{`Showing ${currentResults.start} - ${currentResults.end} out of ${globalData?.coins_count}`}</Typography>
             <Pagination
               count={pageCount}
               onChange={handlePageChange}
@@ -76,6 +87,7 @@ const Data = () => {
               color="primary"
               shape="rounded"
             />
+            <p />
           </Box>
         </>
       )}
