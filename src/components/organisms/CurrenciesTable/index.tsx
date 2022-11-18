@@ -54,7 +54,7 @@ const PercentChange = ({ value }: { value: string }) => {
           : {})
       }}
     >
-      {value}%
+      {value ? `${value}%` : '-'}
     </Typography>
   );
 };
@@ -113,7 +113,9 @@ const CurrenciesTable = ({ data }: CurrenciesTableProps) => {
                 {currency.symbol}
               </TableCell>
               <TableCell align="right">
-                ${Number(currency.price_usd).toLocaleString()}
+                {currency.price_usd
+                  ? `$${Number(currency.price_usd).toLocaleString()}`
+                  : '-'}
               </TableCell>
               <TableCell align="right">
                 <PercentChange value={currency.percent_change_1h} />
@@ -125,10 +127,14 @@ const CurrenciesTable = ({ data }: CurrenciesTableProps) => {
                 <PercentChange value={currency.percent_change_7d} />
               </TableCell>
               <TableCell align="right">
-                ${Number(currency.market_cap_usd).toLocaleString()}
+                {currency.market_cap_usd
+                  ? `$${Number(currency.market_cap_usd).toLocaleString()}`
+                  : '-'}
               </TableCell>
               <TableCell align="right">
-                ${Number(currency.volume24).toLocaleString()}
+                {currency.volume24
+                  ? `$${Number(currency.volume24).toLocaleString()}`
+                  : '-'}
               </TableCell>
             </TableRow>
           ))}
