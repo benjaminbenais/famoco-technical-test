@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 import { Coin } from 'types/Coins';
 
-interface MarketTableProps {
+interface CurrenciesTableProps {
   data: Coin[];
 }
 
@@ -59,7 +59,7 @@ const PercentChange = ({ value }: { value: string }) => {
   );
 };
 
-const MarketTable = ({ data }: MarketTableProps) => {
+const CurrenciesTable = ({ data }: CurrenciesTableProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -137,4 +137,4 @@ const MarketTable = ({ data }: MarketTableProps) => {
   );
 };
 
-export default MarketTable;
+export default CurrenciesTable;

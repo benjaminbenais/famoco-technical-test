@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getGlobalData } from 'slices/global';
-import { GlobalMarketData, MarketTable } from 'components/organisms';
+import { GlobalMarketData, CurrenciesTable } from 'components/organisms';
 import { getCurrencies, resetState } from 'slices/currencies';
 
 const LIMIT = 15;
@@ -60,7 +60,7 @@ const Data = () => {
       </Box>
       {currenciesData && (
         <>
-          <MarketTable data={currenciesData} />
+          <CurrenciesTable data={currenciesData} />
           <Box
             sx={{
               py: 4,
