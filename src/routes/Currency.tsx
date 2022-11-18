@@ -14,8 +14,8 @@ const Currency = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { currency, markets } = useAppSelector((state) => state);
-  const { loading: loadingCurrency, data: currencyData } = currency;
-  const { loading: loadingMarkets, data: marketsData } = markets;
+  const { data: currencyData } = currency;
+  const { data: marketsData } = markets;
 
   useEffect(() => {
     if (id) {
@@ -30,10 +30,6 @@ const Currency = () => {
       dispatch(resetMarketsState());
     };
   }, []);
-
-  if (loadingCurrency || loadingMarkets) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <Box sx={{ py: 4 }}>

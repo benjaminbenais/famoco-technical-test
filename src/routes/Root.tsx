@@ -15,7 +15,9 @@ const Root = () => {
       <Container maxWidth="lg">
         <Box sx={{ minHeight: '100vh' }}>
           <Header />
-          <Outlet />
+          <Box sx={{ py: 4 }}>
+            <Outlet />
+          </Box>
         </Box>
         <Footer />
         <ScrollRestoration />

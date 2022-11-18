@@ -20,7 +20,7 @@ const Data = () => {
   const dispatch = useAppDispatch();
   const { global, currencies } = useAppSelector((state) => state);
 
-  const { loading, data: globalData } = global;
+  const { data: globalData } = global;
   const { data: currenciesData } = currencies;
 
   const [pageCount, setPageCount] = useState(0);
@@ -53,38 +53,32 @@ const Data = () => {
     setSearchParams({ page: String(page) });
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (!currenciesData || !globalData) {
-    return null;
-  }
-
   return (
-    <Box sx={{ py: 4 }}>
+    <Box>
       <Box sx={{ mb: 8 }}>
-        <GlobalMarketData data={globalData} />
+        {globalData && <GlobalMarketData data={globalData} />}
       </Box>
-      <Box>
-        <MarketTable data={currenciesData} />
-      </Box>
-      <Box
-        sx={{
-          py: 4,
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <Pagination
-          count={pageCount}
-          onChange={handlePageChange}
-          defaultPage={defaultPage.current}
-          color="primary"
-          shape="rounded"
-        />
-      </Box>
+      {currenciesData && (
+        <>
+          <MarketTable data={currenciesData} />
+          <Box
+            sx={{
+              py: 4,
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <Pagination
+              count={pageCount}
+              onChange={handlePageChange}
+              defaultPage={defaultPage.current}
+              color="primary"
+              shape="rounded"
+            />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
