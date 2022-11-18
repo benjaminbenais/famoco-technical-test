@@ -33,7 +33,7 @@ const Currency = () => {
   }, []);
 
   return (
-    <Box sx={{ py: 4 }}>
+    <Box>
       <Link
         style={{ textDecoration: 'none' }}
         to={
