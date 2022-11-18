@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent, MouseEvent, useMemo } from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import TablePagination from '@mui/material/TablePagination';
 import { useSearchParams } from 'react-router-dom';
 
@@ -87,6 +88,9 @@ const Data = () => {
       </Box>
       {currenciesData && (
         <>
+          <Typography variant="h5" sx={{ fontWeight: 600, mb: 4 }}>
+            Today&lsquo;s Cryptocurrency Prices by Market Cap
+          </Typography>
           <CurrenciesTable data={currenciesData} />
           <TablePagination
             component="div"
