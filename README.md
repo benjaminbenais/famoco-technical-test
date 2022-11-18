@@ -20,11 +20,11 @@ The currencies are ranked by market cap.
 
 The pagination can be found below the table, allowing to display more rows in the table and to display the next/previous results.
 
-General information about the market are displayed above the table.
+General information about the market is displayed above the table.
 
 1. The first step is to call the endpoint: https://api.coinlore.net/api/global/ to retrieve the general information about the market, but most importantly, to retrieve the total number of coins.
 
-The total number of coins is required to be able to paginate, since the endpoint to retrieve all the coins do no return the total of coins.
+The total number of coins is required to be able to paginate, since the endpoint to retrieve all the coins do not returns the total of coins.
 
 2. Once the endpoint responds with the data, a second endpoint is called: https://api.coinlore.net/api/tickers/ to retrieve data for all the cryptocurrencies.
 
@@ -62,12 +62,12 @@ It uses the mode saved in localStorage (if previously set), otherwise it uses th
 
 ## State management library
 
-Redux is the main state management library in the projet as it was required for the technical test.
+Redux is the main state management library in the project as it was required for the technical test.
 I have been using redux for 3 years now, and for a year with their latest version Redux Toolkit.
 
 ## Deployment
 
-The project is deployed using [Vercel](https://vercel.com). The project itself if hosted [here](https://famoco-technical-test.vercel.app/).
+The project is deployed using [Vercel](https://vercel.com).
 
 Vercel makes the deploiement of React and Next JS project very easy, a few clicks and it's up and running.
 
